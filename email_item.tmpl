@@ -1,0 +1,19 @@
+Message-ID: <{{ .Item.GUID | sha256 }}@rss2pop3>
+Date: {{ with $date := (or .Item.UpdatedParsed .Item.PublishedParsed) }}{{ $date.Format "Mon, 02 Jan 2006 15:04:05 -0700"}}{{ end }}
+From: {{ .Feed.Title | qpencode }} <rss@rss2pop3>
+Subject: {{ .Item.Title | qpencode }}
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<base href="{{ or .Feed.FeedLink .Feed.Link }}" />
+</head>
+<body>
+<a href="{{ .Item.Link }}">{{ .Item.Title }}</a>
+<hr>
+{{ .Item.Description }}
+</body>
+</html>
